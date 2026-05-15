@@ -1,25 +1,27 @@
 :root{
-  --bg: #f6f7fb;
+  --bg: #f7fbff; /* very light pastel blue */
   --card: #ffffff;
-  --muted: #6b7280;
-  --accent: #3b82f6; /* soft blue */
+  --muted: #7b8a97; /* soft muted gray-blue */
+  --accent: #7dd3fc; /* pastel sky blue */
+  --text: #0f172a;
   --radius: 12px;
 }
+
+/* Dark theme overrides applied via [data-theme="dark"] on <html> */
+/* Single light pastel theme */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
   font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   background:var(--bg);
-  color:#0f172a;
+  color:var(--text);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
-.container{
-  max-width:780px;
-  margin:48px auto;
-  padding:24px;
-}
+.container{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:32px 16px}
+.header-row{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;max-width:720px}
+.header-actions{display:flex;align-items:center}
 .title{margin:0;font-size:28px;font-weight:600}
 .subtitle{margin:6px 0 20px;color:var(--muted)}
 .card{
@@ -27,9 +29,15 @@ body{
   padding:24px;
   border-radius:var(--radius);
   box-shadow:0 6px 20px rgba(15,23,42,0.06);
+  transition:background .25s ease,color .25s ease,box-shadow .25s ease,transform .15s ease;
+  width:100%;
+  max-width:720px;
+  margin-top:12px;
 }
-.message{font-size:18px;margin:0 0 16px;color:#0f172a}
-.controls{display:flex;gap:12px}
+/* separate card spacing */
+.card.notes{margin-top:18px}
+.message{font-size:18px;margin:0 0 16px;color:var(--text)}
+.controls{display:flex;gap:12px;justify-content:flex-end;align-items:center}
 .btn{
   appearance:none;
   border:0;
@@ -45,4 +53,35 @@ body{
 .btn:disabled{opacity:0.6;cursor:default}
 .footer{margin-top:14px;color:var(--muted);font-size:13px}
 
-@media (max-width:520px){.container{margin:20px;padding:16px}.title{font-size:22px}}
+.note-form{display:flex;flex-direction:column;gap:12px}
+.note-form input,.note-form textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(15,23,42,0.06);background:linear-gradient(180deg,#fbfcff,#fbfdff);box-sizing:border-box}
+.note-form input:focus,.note-form textarea:focus{outline:none;box-shadow:0 6px 18px rgba(59,130,246,0.08);border-color:var(--accent)}
+.notes-list{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:12px}
+.notes-list li{word-break:break-word}
+.controls{justify-content:flex-end}
+.note-item{padding:12px;border-radius:10px;background:linear-gradient(180deg,#ffffff,#fcfdff);box-shadow:0 4px 12px rgba(15,23,42,0.04);animation:fadeIn .28s ease both;overflow-wrap:anywhere}
+.note-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.note-body{margin-top:8px;color:var(--text)}
+.note-item .del{background:transparent;border:0;color:#ef4444;cursor:pointer;font-weight:600}
+.note-item .del:hover{opacity:0.9}
+.muted{color:var(--muted);font-size:13px}
+
+@keyframes fadeIn{
+  from { opacity:0; transform: translateY(6px) scale(0.995) }
+  to   { opacity:1; transform: translateY(0) scale(1) }
+}
+
+@keyframes swipeOut {
+  from { opacity:1; transform: translateX(0) }
+  to { opacity:0; transform: translateX(36px) scale(0.98) }
+}
+
+.note-item.removing{animation:swipeOut .32s ease forwards}
+
+/* Smooth theme transition for background and text */
+/* subtle transition for interactions */
+html{transition:opacity .12s ease}
+
+
+@media (max-width:720px){.container{margin:20px;padding:16px}.title{font-size:22px}.header-row{flex-direction:column;align-items:flex-start;gap:8px}}
+@media (max-width:420px){.note-form input,.note-form textarea{padding:10px}.btn{padding:8px 12px}}

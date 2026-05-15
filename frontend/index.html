@@ -10,15 +10,26 @@
   <body>
     <main class="container">
       <header>
-        <h1 class="title">CICD Project</h1>
-        <p class="subtitle">Simple frontend served by the backend — clean UI with Poppins.</p>
+        <div class="header-row">
+          <div>
+            <h1 class="title">CICD Project</h1>
+            <p class="subtitle">Simple frontend served by the backend</p>
+          </div>
+        </div>
       </header>
 
-      <section class="card">
-        <p id="msg" class="message">Click the button to get a greeting from the backend.</p>
-        <div class="controls">
-          <button id="greetBtn" class="btn">Get Greeting</button>
-        </div>
+      <section class="card notes">
+        <form id="noteForm" class="note-form">
+          <input id="title" placeholder="Title" required />
+          <textarea id="body" placeholder="Write a note..." rows="3"></textarea>
+          <div class="controls">
+            <button id="addBtn" class="btn">Add Note</button>
+          </div>
+        </form>
+
+        <ul id="notesList" class="notes-list" aria-live="polite">
+          <li class="muted">No notes yet.</li>
+        </ul>
       </section>
 
       <footer class="footer">Made with care · Simple, clean UI</footer>

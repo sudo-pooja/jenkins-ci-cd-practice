@@ -22,11 +22,13 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
+                        sh 'docker volume create cicd-data || true'
                         sh 'docker rm -f cicd-project || true'
-                        sh "docker run -d -p 9090:3000 --name cicd-project ${IMAGE}"
+                        sh "docker run -d -p 9090:3000 --name cicd-project -v cicd-data:/usr/src/app/data ${IMAGE}"
                     } else {
+                        bat 'docker volume create cicd-data || echo ignore'
                         bat 'docker rm -f cicd-project || echo ignore'
-                        bat "docker run -d -p 9090:3000 --name cicd-project %IMAGE%"
+                        bat "docker run -d -p 9090:3000 --name cicd-project -v cicd-data:/usr/src/app/data %IMAGE%"
                     }
                 }
             }
