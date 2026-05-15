@@ -4,15 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>CICD Project Frontend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
-    <h1>Frontend</h1>
-    <div id="msg">Loading...</div>
-    <script>
-      fetch('/api/hello')
-        .then(r => r.json())
-        .then(j => { document.getElementById('msg').textContent = j.message; })
-        .catch(() => { document.getElementById('msg').textContent = 'Failed to reach backend'; });
-    </script>
+    <main class="container">
+      <header>
+        <h1 class="title">CICD Project</h1>
+        <p class="subtitle">Simple frontend served by the backend — clean UI with Poppins.</p>
+      </header>
+
+      <section class="card">
+        <p id="msg" class="message">Click the button to get a greeting from the backend.</p>
+        <div class="controls">
+          <button id="greetBtn" class="btn">Get Greeting</button>
+        </div>
+      </section>
+
+      <footer class="footer">Made with care · Simple, clean UI</footer>
+    </main>
+
+    <script src="/app.js"></script>
   </body>
 </html>
