@@ -1,0 +1,30 @@
+pipeline{
+    agents any
+
+    stages{
+        stage("Checkout"){
+            steps{
+                Checkout scm
+            }
+        }
+        stage("Build Docker Image"){
+            steps{
+                sh 'docker build -t myapp .'
+            }
+        }
+        stage("Run Container"){
+            steps{
+                sh 'docker rm -f myapp || true'
+                sh 'docker run -d -p 9090:3000 --name myapp myapp'
+            }
+        }
+    }
+    post {
+        success{
+            echo 'App is running at http://localhost:9090'
+        }
+        failure{
+            echo 'Pipeline failed!'
+        }
+    }
+}
