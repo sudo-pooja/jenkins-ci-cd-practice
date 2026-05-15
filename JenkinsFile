@@ -24,7 +24,7 @@ pipeline{
             echo 'App is running at http://localhost:9090'
         }
         failure{
-            echo 'Pipeline failed!'
+            echo 'Pipeline failed..!'
         }
     }
 }
