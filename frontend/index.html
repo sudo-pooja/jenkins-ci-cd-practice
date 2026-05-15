@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CICD Project Frontend</title>
+  </head>
+  <body>
+    <h1>Frontend</h1>
+    <div id="msg">Loading...</div>
+    <script>
+      fetch('/api/hello')
+        .then(r => r.json())
+        .then(j => { document.getElementById('msg').textContent = j.message; })
+        .catch(() => { document.getElementById('msg').textContent = 'Failed to reach backend'; });
+    </script>
+  </body>
+</html>

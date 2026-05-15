@@ -1,5 +1,5 @@
-const http = require("http");
-const server = http.createServer((req,res) => {
-    res.end('<h1>Aloha...!</h1>');
-});
-server.listen(3000, () => console.log('App is running...!'))
+// Bootstrap for the Express backend
+require('./backend/server');
+
+// Keep this file as the application entry point so `npm start`
+// and existing workflows continue to work.

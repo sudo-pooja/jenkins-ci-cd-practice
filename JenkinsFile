@@ -1,29 +1,39 @@
 pipeline {
     agent any
+    environment {
+        IMAGE = "cicd-project:${env.BUILD_NUMBER ?: 'latest'}"
+    }
     stages {
         stage('Checkout') {
+            steps { checkout scm }
+        }
+        stage('Build') {
             steps {
-                checkout scm
+                script {
+                    if (isUnix()) {
+                        sh "docker build -t ${IMAGE} ."
+                    } else {
+                        bat "docker build -t %IMAGE% ."
+                    }
+                }
             }
         }
-        stage('Build Docker Image') {
+        stage('Run') {
             steps {
-                sh 'docker build -t myapp .'
-            }
-        }
-        stage('Run Container') {
-            steps {
-                sh 'docker rm -f myapp || true'
-                sh 'docker run -d -p 9090:3000 --name myapp myapp'
+                script {
+                    if (isUnix()) {
+                        sh 'docker rm -f cicd-project || true'
+                        sh "docker run -d -p 9090:3000 --name cicd-project ${IMAGE}"
+                    } else {
+                        bat 'docker rm -f cicd-project || echo ignore'
+                        bat "docker run -d -p 9090:3000 --name cicd-project %IMAGE%"
+                    }
+                }
             }
         }
     }
     post {
-        success {
-            echo 'App running at http://<EC2_IP>:9090'
-        }
-        failure {
-            echo 'Pipeline failed!'
-        }
+        success { echo 'App running at http://<HOST_IP>:9090' }
+        failure { echo 'Pipeline failed!' }
     }
 }
